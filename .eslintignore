@@ -1,0 +1,4 @@
+locales/
+node_modules/
+test/
+index.js

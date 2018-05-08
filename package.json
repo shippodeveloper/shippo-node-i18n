@@ -1,0 +1,29 @@
+{
+  "name": "shippo-node-i18n",
+  "version": "1.0.0",
+  "description": "Shippo's i18n package",
+  "main": "index.js",
+  "scripts": {
+    "jshint": "jshint --verbose .",
+    "test": "npm run jshint && make test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shippodeveloper/shippo-node-i18n.git"
+  },
+  "keywords": [
+    "shippo",
+    "i18n"
+  ],
+  "author": "Shippo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/shippodeveloper/shippo-node-i18n/issues"
+  },
+  "homepage": "https://github.com/shippodeveloper/shippo-node-i18n#readme",
+  "devDependencies": {
+    "jshint": "^2.9.5",
+    "mocha": "^5.1.1",
+    "should": "^13.2.1"
+  }
+}
