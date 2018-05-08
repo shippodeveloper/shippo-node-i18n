@@ -59,3 +59,9 @@ typings/
 
 package-lock.json
 
+#projects folder
+.idea
+*.sublime-workspace
+*.sublime-project
+
+

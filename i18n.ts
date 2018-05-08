@@ -72,6 +72,10 @@ export class i18n {
         return output;
     }
 
+    /** date format **/
     __df():string {
+        let ouput:string;
+
+        return ouput;
     }
 }
