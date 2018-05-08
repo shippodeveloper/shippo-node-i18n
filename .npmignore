@@ -2,3 +2,6 @@
 .DS_Store
 test/
 locales/
+
+#ignore typescript
+*.ts
