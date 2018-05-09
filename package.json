@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "test": "tslint --project ./ && tsc && mocha"
+    "test": "mocha --reporter spec"
   },
   "repository": {
     "type": "git",
