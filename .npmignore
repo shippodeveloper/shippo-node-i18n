@@ -2,6 +2,8 @@
 .DS_Store
 test/
 locales/
+localestowrite/
+localesmakeplural/
 
 #ignore typescript
 *.ts
