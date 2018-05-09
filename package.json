@@ -5,7 +5,6 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "jshint": "jshint --verbose .",
     "test": "tslint --project ./ && tsc && mocha"
   },
   "repository": {
