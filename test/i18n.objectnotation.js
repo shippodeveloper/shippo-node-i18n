@@ -4,9 +4,10 @@ var should = require("should");
 describe('Object Notation', function() {
   let i18n = {};
   beforeEach(function() {
-    i18n = I18n.init({
+    I18n.init({
       locales: ['en', 'de'],
       directory: './locales',
+      register: i18n,
       updateFiles: true,
       objectNotation: true
     });
@@ -14,13 +15,13 @@ describe('Object Notation', function() {
 
   describe('Date/Time patterns', function() {
     it('should return en formatting as expected', function() {
-      i18n.setLocale('en');
+      i18n.switchLocale('en');
       should.equal(i18n.__('format.date'), 'MM/DD/YYYY');
       should.equal(i18n.__('format.time'), 'h:mm:ss a');
     });
 
     it('should return de formatting as expected', function() {
-      i18n.setLocale('de');
+      i18n.switchLocale('de');
       should.equal(i18n.__('format.date'), 'DD.MM.YYYY');
       should.equal(i18n.__('format.time'), 'hh:mm:ss');
     });
@@ -34,7 +35,7 @@ describe('Object Notation', function() {
     });
 
     it('should return en translations as expected, using object traversal notation', function() {
-      i18n.setLocale('en');
+      i18n.switchLocale('en');
       should.equal(i18n.__('greeting.formal'), 'Hello');
       should.equal(i18n.__('greeting.informal'), 'Hi');
       should.equal(i18n.__('greeting.placeholder.formal', 'Marcus'), 'Hello Marcus');
@@ -43,14 +44,14 @@ describe('Object Notation', function() {
     });
 
     it('should return en translations as expected, when dot is first or last character', function () {
-      i18n.setLocale('en');
+      i18n.switchLocale('en');
       should.equal(i18n.__('. is first character'), 'Dot is first character');
       should.equal(i18n.__('last character is .'), 'last character is Dot');
       should.equal(i18n.__('few sentences. with .'), 'few sentences with Dot');
     });
 
     it('should provide proper pluralization support, using object traversal notation', function() {
-      i18n.setLocale('en');
+      i18n.switchLocale('en');
       var singular = i18n.__n({ singular: "cat", plural: "cat", locale: "de" }, 1);
       var plural = i18n.__n({ singular: "cat", plural: "cat", locale: "de" }, 3);
       should.equal(singular, '1 Katze');

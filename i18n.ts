@@ -2,20 +2,22 @@ let i18n = require("i18n");
 let numeral = require('numeral');
 
 export class I18n {
-    public readonly version:string = '1.0.0';
+    public readonly version:string = '0.1.1';
     private static _api = {
         '__nv' : '__nv',
-        '__nf' : '__nf'
+        '__nf' : '__nf',
+        'switchLocale' : 'switchLocale'
     };
     private static _defaultLocale:string;
 
-    public static init(opt:any):I18n {
-        let si18n = new I18n();
+    private static _registerObj:any;
+
+    public static init(opt:any) {
 
         //setup i18n
-        opt = (<any>Object).assign({
-            register: si18n
-        }, opt);
+        opt = (<any>Object).assign({}, opt);
+
+        this._registerObj = opt.register;
 
         i18n.configure(opt);
         I18n._defaultLocale = i18n.getLocale();
@@ -27,6 +29,7 @@ export class I18n {
                 delete opt.numeral.defaultFormat;
             }
             for(let locale in opt.numeral) {
+                if(locale === 'en') { continue;}
                 numeral.register('locale', locale, opt.numeral[locale]);
             }
         }
@@ -45,7 +48,6 @@ export class I18n {
                 I18n._applyAPItoObject(opt.register);
             }
         }
-        return si18n;
     }
 
     private static _applyAPItoObject(object:any) {
@@ -94,10 +96,15 @@ export class I18n {
      * @private
      */
     public static __nf(value: number) {
-        if(!arguments[1]) {
+        if(typeof arguments[1] !== 'undefined') {
             return numeral(value).format(arguments[1]);
         }
 
         return numeral(value).format();
+    }
+
+    public static switchLocale(locale:string) {
+        i18n.setLocale(locale);
+        numeral.locale(i18n.getLocale());
     }
 }

@@ -1,6 +1,6 @@
 {
   "name": "shippo-node-i18n",
-  "version": "1.0.0",
+  "version": "0.1.1",
   "description": "Shippo's i18n package",
   "main": "index.js",
   "scripts": {
