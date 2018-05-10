@@ -6,6 +6,8 @@ export class I18n {
     private static _api = {
         '__nv' : '__nv',
         '__nf' : '__nf',
+        '__cf' : '__cf',
+        '__cv' : '__cv',
         'switchLocale' : 'switchLocale'
     };
     private static _defaultLocale:string;
@@ -95,7 +97,7 @@ export class I18n {
      * @param {number} value
      * @private
      */
-    public static __nf(value: number) {
+    public static __nf(value: number):string {
         if(typeof arguments[1] !== 'undefined') {
             return numeral(value).format(arguments[1]);
         }
@@ -103,6 +105,42 @@ export class I18n {
         return numeral(value).format();
     }
 
+    /**
+     * Format currency text from value
+     *
+     * @param {number} value
+     * @param includeSymbol
+     * @returns {string}
+     * @private
+     */
+    public static __cf(value:number, includeSymbol:any):string {
+        if(typeof includeSymbol === 'undefined') {
+            includeSymbol = true;
+        }
+
+        if (includeSymbol === true) {
+            //@ts-ignore
+            return this.__nf(value, this.__('format.currency'));
+        }
+
+        return this.__nf(value);
+    }
+
+    /**
+     * Get value from currency formatted text
+     *
+     * @param {string} input
+     * @returns {number}
+     * @private
+     */
+    public static __cv(input:string): number {
+        return this.__nv(input);
+    }
+
+    /**
+     * Change locale
+     * @param {string} locale
+     */
     public static switchLocale(locale:string) {
         i18n.setLocale(locale);
         numeral.locale(i18n.getLocale());

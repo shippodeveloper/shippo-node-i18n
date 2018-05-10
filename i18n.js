@@ -85,6 +85,38 @@ class I18n {
         }
         return numeral(value).format();
     }
+    /**
+     * Format currency text from value
+     *
+     * @param {number} value
+     * @param includeSymbol
+     * @returns {string}
+     * @private
+     */
+    static __cf(value, includeSymbol) {
+        if (typeof includeSymbol === 'undefined') {
+            includeSymbol = true;
+        }
+        if (includeSymbol === true) {
+            //@ts-ignore
+            return this.__nf(value, this.__('format.currency'));
+        }
+        return this.__nf(value);
+    }
+    /**
+     * Get value from currency formatted text
+     *
+     * @param {string} input
+     * @returns {number}
+     * @private
+     */
+    static __cv(input) {
+        return this.__nv(input);
+    }
+    /**
+     * Change locale
+     * @param {string} locale
+     */
     static switchLocale(locale) {
         i18n.setLocale(locale);
         numeral.locale(i18n.getLocale());
@@ -93,6 +125,8 @@ class I18n {
 I18n._api = {
     '__nv': '__nv',
     '__nf': '__nf',
+    '__cf': '__cf',
+    '__cv': '__cv',
     'switchLocale': 'switchLocale'
 };
 exports.I18n = I18n;
