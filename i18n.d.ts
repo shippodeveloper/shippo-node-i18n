@@ -17,6 +17,27 @@ export declare class I18n {
      * @param {number} value
      * @private
      */
-    static __nf(value: number): any;
+    static __nf(value: number): string;
+    /**
+     * Format currency text from value
+     *
+     * @param {number} value
+     * @param includeSymbol
+     * @returns {string}
+     * @private
+     */
+    static __cf(value: number, includeSymbol: any): string;
+    /**
+     * Get value from currency formatted text
+     *
+     * @param {string} input
+     * @returns {number}
+     * @private
+     */
+    static __cv(input: string): number;
+    /**
+     * Change locale
+     * @param {string} locale
+     */
     static switchLocale(locale: string): void;
 }

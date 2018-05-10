@@ -66,7 +66,8 @@
   "Hello {{name}}, how was your %s?": "Hello {{name}}, how was your %s?",
   "format": {
     "date": "MM/DD/YYYY",
-    "time": "h:mm:ss a"
+    "time": "h:mm:ss a",
+    "currency": "0,0$"
   },
   "greeting": {
     "formal": "Hello",
