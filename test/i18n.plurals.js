@@ -3,13 +3,14 @@ var i18n = require('../i18n').I18n,
 
 // reserve a "private" scope
 var pluralTest = {};
-pluralTest = i18n.init({
+i18n.init({
   locales: ['en', 'de'],
   directory: './locales',
+  register: pluralTest,
   updateFiles: false,
   objectNotation: true
 });
-pluralTest.setLocale(pluralTest, 'en');
+pluralTest.switchLocale(pluralTest, 'en');
 
 describe('parsing plural intervals from strings', function() {
 

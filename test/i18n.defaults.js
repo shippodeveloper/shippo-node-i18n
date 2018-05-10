@@ -1,14 +1,13 @@
-var i18n = require('../i18n').I18n,
+var I18n = require('../i18n').I18n,
   should = require("should"),
   fs = require('fs');
 
 describe('Module Defaults', function() {
-
   var testScope = {};
-
   beforeEach(function() {
-    testScope = i18n.init({
+    I18n.init({
       locales: ['en', 'de'],
+      register: testScope,
       directory: './defaultlocales'
     });
     testScope.__('Hello');

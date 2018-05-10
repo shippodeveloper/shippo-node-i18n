@@ -19,14 +19,15 @@ describe('when i18n gets a new phrase', function() {
   var locales = ['en', 'de', 'fr', 'ru'];
 
   beforeEach(function() {
-    TestScope = i18n.init({
+    i18n.init({
       locales: locales,
       directory: directory,
+      register: TestScope,
       updateFiles: true,
       syncFiles: true,
       objectNotation: true
     });
-    TestScope.setLocale('en');
+    TestScope.switchLocale('en');
   });
 
   it('should get written to all files with __()', function(done) {

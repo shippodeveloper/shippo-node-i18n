@@ -1,26 +1,25 @@
 var i18n = require('../i18n').I18n,
-  should = require("should"),
-  fs = require('fs'),
-  path = require('path');
+  should = require("should");
 
 describe('parsing Messageformat phrases', function() {
 
   var mfTest = {};
 
   beforeEach(function() {
-    mfTest = i18n.init({
+    i18n.init({
       locales: ['en', 'de', 'fr', 'ru'],
       directory: './locales',
+      register: mfTest,
       updateFiles: false,
       objectNotation: true
     });
   });
 
   it('should work with simple strings', function() {
-    mfTest.setLocale('en');
+    mfTest.switchLocale('en');
     should.equal('Hello', mfTest.__mf('Hello'));
 
-    mfTest.setLocale('de');
+    mfTest.switchLocale('de');
     should.equal('Hallo', mfTest.__mf('Hello'));
     should.equal('Hallo', mfTest.__mf('Hello'));
     should.equal('Hallo Marcus, wie geht es dir heute?', mfTest.__mf('Hello %s, how are you today?', 'Marcus'));
@@ -29,10 +28,10 @@ describe('parsing Messageformat phrases', function() {
   });
 
   it('should work with basic replacements', function() {
-    mfTest.setLocale('en');
+    mfTest.switchLocale('en');
     should.equal('Hello Marcus', mfTest.__mf('Hello {name}', { name: 'Marcus' }));
 
-    mfTest.setLocale('de');
+    mfTest.switchLocale('de');
     should.equal('Hallo Marcus', mfTest.__mf('Hello {name}', { name: 'Marcus' }));
     should.equal('Hallo Marcus, wie war dein test?', mfTest.__mf('Hello {name}, how was your %s?', 'test', { name: 'Marcus' }));
   });
@@ -46,7 +45,7 @@ describe('parsing Messageformat phrases', function() {
     msg += 'many{are many for #}';
     msg += 'other{others for #}}';
 
-    mfTest.setLocale('en');
+    mfTest.switchLocale('en');
     should.equal('In english there others for 0', mfTest.__mf(msg, { NUM: 0, lang: 'english' }));
     should.equal('In english there is one for 1', mfTest.__mf(msg, { NUM: 1, lang: 'english' }));
     should.equal('In english there others for 2', mfTest.__mf(msg, { NUM: 2, lang: 'english' }));
@@ -55,7 +54,7 @@ describe('parsing Messageformat phrases', function() {
     should.equal('In english there others for 5', mfTest.__mf(msg, { NUM: 5, lang: 'english' }));
     should.equal('In english there others for 6', mfTest.__mf(msg, { NUM: 6, lang: 'english' }));
 
-    mfTest.setLocale('de');
+    mfTest.switchLocale('de');
     should.equal('In german there others for 0', mfTest.__mf(msg, { NUM: 0, lang: 'german' }));
     should.equal('In german there is one for 1', mfTest.__mf(msg, { NUM: 1, lang: 'german' }));
     should.equal('In german there others for 2', mfTest.__mf(msg, { NUM: 2, lang: 'german' }));
@@ -64,7 +63,7 @@ describe('parsing Messageformat phrases', function() {
     should.equal('In german there others for 5', mfTest.__mf(msg, { NUM: 5, lang: 'german' }));
     should.equal('In german there others for 6', mfTest.__mf(msg, { NUM: 6, lang: 'german' }));
 
-    mfTest.setLocale('fr');
+    mfTest.switchLocale('fr');
     should.equal('In french there is one for 0', mfTest.__mf(msg, { NUM: 0, lang: 'french' }));
     should.equal('In french there is one for 1', mfTest.__mf(msg, { NUM: 1, lang: 'french' }));
     should.equal('In french there others for 2', mfTest.__mf(msg, { NUM: 2, lang: 'french' }));
@@ -73,7 +72,7 @@ describe('parsing Messageformat phrases', function() {
     should.equal('In french there others for 5', mfTest.__mf(msg, { NUM: 5, lang: 'french' }));
     should.equal('In french there others for 6', mfTest.__mf(msg, { NUM: 6, lang: 'french' }));
 
-    mfTest.setLocale('ru');
+    mfTest.switchLocale('ru');
     should.equal('In russian there are many for 0', mfTest.__mf(msg, { NUM: 0, lang: 'russian' }));
     should.equal('In russian there is one for 1', mfTest.__mf(msg, { NUM: 1, lang: 'russian' }));
     should.equal('In russian there are a few for 2', mfTest.__mf(msg, { NUM: 2, lang: 'russian' }));

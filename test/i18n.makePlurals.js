@@ -1,4 +1,4 @@
-var i18n = require('../i18n').I18n,
+var I18n = require('../I18n').I18n,
   should = require("should"),
   fs = require('fs'),
   path = require('path');
@@ -13,7 +13,7 @@ function putJson(l, d) {
   fs.writeFileSync(directory + '/' + l + '.json', JSON.stringify(d, null, '\t'));
 }
 
-describe('i18n supports MakePlural', function() {
+describe('I18n supports MakePlural', function() {
 
   var TestScope = {};
   var locales = ['en', 'de', 'fr', 'ru', 'ar', 'de-DE', 'de-AT', 'de-CH'];
@@ -74,16 +74,16 @@ describe('i18n supports MakePlural', function() {
   };
 
   beforeEach(function() {
-    TestScope = {};
-    TestScope = i18n.init({
+    I18n.init({
       locales: locales,
       directory: directory,
+      register: TestScope,
       updateFiles: true,
       syncFiles: true,
       objectNotation: true
     });
 
-    TestScope.setLocale('en');
+    TestScope.switchLocale('en');
     TestScope.__('Hello World'); // <-- just inits
     for (var i = 0; i < locales.length; i++) {
       putJson(locales[i], fixture[locales[i]]);
