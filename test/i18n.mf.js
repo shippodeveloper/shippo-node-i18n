@@ -1,7 +1,5 @@
 var i18n = require('../i18n').I18n,
-  should = require("should"),
-  fs = require('fs'),
-  path = require('path');
+  should = require("should");
 
 describe('parsing Messageformat phrases', function() {
 
