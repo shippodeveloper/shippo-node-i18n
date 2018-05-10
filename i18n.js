@@ -4,7 +4,7 @@ let i18n = require("i18n");
 let numeral = require('numeral');
 class I18n {
     constructor() {
-        this.version = '0.1.1';
+        this.version = '0.1.2';
     }
     static init(opt) {
         //setup i18n

@@ -2,7 +2,7 @@ let i18n = require("i18n");
 let numeral = require('numeral');
 
 export class I18n {
-    public readonly version:string = '0.1.1';
+    public readonly version:string = '0.1.2';
     private static _api = {
         '__nv' : '__nv',
         '__nf' : '__nf',
