@@ -15,7 +15,7 @@ class I18n {
         //setup numeral
         if (typeof (opt.numeral) === 'object') {
             if (opt.numeral.hasOwnProperty('defaultFormat')) {
-                numeral.defaultFormat = opt.numeral.defaultFormat;
+                numeral.defaultFormat(opt.numeral.defaultFormat);
                 delete opt.numeral.defaultFormat;
             }
             for (let locale in opt.numeral) {
