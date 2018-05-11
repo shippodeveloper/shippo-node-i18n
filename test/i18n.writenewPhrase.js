@@ -1,4 +1,4 @@
-var i18n = require('../i18n').I18n,
+var I18n = require('../ShippoI18n').ShippoI18n,
   should = require("should"),
   fs = require('fs'),
   path = require('path');
@@ -19,7 +19,7 @@ describe('when i18n gets a new phrase', function() {
   var locales = ['en', 'de', 'fr', 'ru'];
 
   beforeEach(function() {
-    i18n.init({
+    I18n.init({
       locales: locales,
       directory: directory,
       register: TestScope,

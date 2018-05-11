@@ -1,4 +1,4 @@
-var I18n = require('../i18n').I18n;
+var I18n = require('../ShippoI18n').ShippoI18n;
 var should = require("should");
 
 describe('Object Notation', function() {

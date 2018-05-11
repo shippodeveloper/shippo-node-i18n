@@ -1,4 +1,4 @@
-var i18n = require('../i18n').I18n,
+var I18n = require('../ShippoI18n').ShippoI18n,
   should = require("should");
 
 describe('parsing Messageformat phrases', function() {
@@ -6,7 +6,7 @@ describe('parsing Messageformat phrases', function() {
   var mfTest = {};
 
   beforeEach(function() {
-    i18n.init({
+    I18n.init({
       locales: ['en', 'de', 'fr', 'ru'],
       directory: './locales',
       register: mfTest,

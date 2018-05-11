@@ -1,4 +1,4 @@
-var I18n = require('../I18n').I18n,
+var I18n = require('../ShippoI18n').ShippoI18n,
   should = require("should"),
   fs = require('fs'),
   path = require('path');
@@ -13,7 +13,7 @@ function putJson(l, d) {
   fs.writeFileSync(directory + '/' + l + '.json', JSON.stringify(d, null, '\t'));
 }
 
-describe('I18n supports MakePlural', function() {
+describe('ShippoI18n supports MakePlural', function() {
 
   var TestScope = {};
   var locales = ['en', 'de', 'fr', 'ru', 'ar', 'de-DE', 'de-AT', 'de-CH'];

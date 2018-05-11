@@ -1,3 +1,3 @@
 'use strict';
 
-module.exports = require('./i18n');
+module.exports = require('./ShippoI18n');

@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 let i18n = require('i18n');
 let numeral = require('numeral');
 let moment = require('moment');
-class I18n {
+class ShippoI18n {
     constructor() {
         this.version = '0.1.2';
     }
@@ -12,7 +12,7 @@ class I18n {
         opt = Object.assign({}, opt);
         this._registerObj = opt.register;
         i18n.configure(opt);
-        I18n._defaultLocale = i18n.getLocale();
+        ShippoI18n._defaultLocale = i18n.getLocale();
         //setup numeral
         if (typeof (opt.numeral) === 'object') {
             if (opt.numeral.hasOwnProperty('defaultFormat')) {
@@ -34,17 +34,17 @@ class I18n {
             if (Array.isArray(opt.register)) {
                 register = opt.register;
                 register.forEach(function (r) {
-                    I18n._applyAPItoObject(r);
+                    ShippoI18n._applyAPItoObject(r);
                 });
             }
             else {
-                I18n._applyAPItoObject(opt.register);
+                ShippoI18n._applyAPItoObject(opt.register);
             }
         }
     }
     static _applyAPItoObject(object) {
         var alreadySetted = true;
-        let api = I18n._api;
+        let api = ShippoI18n._api;
         // attach to itself if not provided
         for (let method in api) {
             if (api.hasOwnProperty(method)) {
@@ -52,13 +52,13 @@ class I18n {
                 // be kind rewind, or better not touch anything already existing
                 if (!object[alias]) {
                     alreadySetted = false;
-                    object[alias] = I18n[method].bind(object);
+                    object[alias] = ShippoI18n[method].bind(object);
                 }
             }
         }
         // set initial locale if not set
         if (!object.locale) {
-            object.locale = I18n._defaultLocale;
+            object.locale = ShippoI18n._defaultLocale;
         }
         // escape recursion
         if (alreadySetted) {
@@ -136,7 +136,7 @@ class I18n {
         moment.locale(i18n.getLocale());
     }
 }
-I18n._api = {
+ShippoI18n._api = {
     '__nv': '__nv',
     '__nf': '__nf',
     '__cf': '__cf',
@@ -144,4 +144,4 @@ I18n._api = {
     '__dtf': '__dtf',
     'switchLocale': 'switchLocale'
 };
-exports.I18n = I18n;
+exports.ShippoI18n = ShippoI18n;

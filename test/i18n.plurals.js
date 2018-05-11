@@ -1,9 +1,9 @@
-var i18n = require('../i18n').I18n,
+var I18n = require('../ShippoI18n').ShippoI18n,
   should = require("should");
 
 // reserve a "private" scope
 var pluralTest = {};
-i18n.init({
+I18n.init({
   locales: ['en', 'de'],
   directory: './locales',
   register: pluralTest,

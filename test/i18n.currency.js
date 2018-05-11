@@ -1,4 +1,4 @@
-let I18n = require('../i18n').I18n,
+let I18n = require('../ShippoI18n').ShippoI18n,
   should = require('should');
 
 describe('i18n \'s currency', function () {

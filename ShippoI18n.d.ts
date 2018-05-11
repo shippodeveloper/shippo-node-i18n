@@ -1,4 +1,4 @@
-export declare class I18n {
+export declare class ShippoI18n {
     readonly version: string;
     private static _api;
     private static _defaultLocale;
