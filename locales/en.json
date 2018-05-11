@@ -1,4 +1,18 @@
 {
+	"currency": {
+		"name": "US Dollar",
+		"short_name": "USD",
+		"symbol": "$",
+		"default_format": "$0,0.0"
+	},
+	"datetime": {
+		"full_date_time": "MM/DD/YYYY HH:mm:ss",
+		"date": "MM/DD/YYYY",
+		"time": "HH:mm:ss",
+		"short_time": "HH:mm",
+		"short_date": "MM/DD",
+		"short_date_time": "MM/DD HH:mm"
+	},
 	"Hello": "Hello",
 	"Hello %s, how are you today?": "Hello %s, how are you today?",
 	"weekend": "weekend",
@@ -64,11 +78,6 @@
 	"Hello %s": "Hello %s",
 	"Hello {{name}}": "Hello {{name}}",
 	"Hello {{name}}, how was your %s?": "Hello {{name}}, how was your %s?",
-	"format": {
-		"date": "MM/DD/YYYY",
-		"time": "h:mm:ss a",
-		"currency": "$0,0.0"
-	},
 	"greeting": {
 		"formal": "Hello",
 		"informal": "Hi",

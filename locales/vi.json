@@ -1,4 +1,19 @@
 {
+  "currency": {
+    "name": "Việt Nam Đồng",
+    "short_name": "VND",
+    "symbol" : "đ",
+    "default_format": "0,0$"
+  },
+  "datetime" : {
+    "full_date_time": "DD/MM/YYYY HH:mm:ss",
+    "date": "DD/MM/YYYY",
+    "time": "HH:mm:ss",
+    "short_time" : "HH:mm",
+    "short_date": "DD/MM",
+    "short_date_time": "DD/MM HH:mm"
+  },
+
   "Hello": "Xin chào",
   "Hello %s, how are you today?": "Xin chào %s, hôm nay thế nào?",
   "weekend": "cuối tuần",

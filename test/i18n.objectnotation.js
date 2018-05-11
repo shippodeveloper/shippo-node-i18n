@@ -13,20 +13,6 @@ describe('Object Notation', function() {
     });
   });
 
-  describe('Date/Time patterns', function() {
-    it('should return en formatting as expected', function() {
-      i18n.switchLocale('en');
-      should.equal(i18n.__('format.date'), 'MM/DD/YYYY');
-      should.equal(i18n.__('format.time'), 'h:mm:ss a');
-    });
-
-    it('should return de formatting as expected', function() {
-      i18n.switchLocale('de');
-      should.equal(i18n.__('format.date'), 'DD.MM.YYYY');
-      should.equal(i18n.__('format.time'), 'hh:mm:ss');
-    });
-  });
-
   describe('i18nTranslate', function() {
 
     beforeEach(function() {

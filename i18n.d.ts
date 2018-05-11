@@ -36,6 +36,14 @@ export declare class I18n {
      */
     static __cv(input: string): number;
     /**
+     *
+     * @param source Date|unix time formatted sting, exp: '2018-05-11'
+     * @param {string} format define in locate file
+     * @returns {string}
+     * @private
+     */
+    static __dtf(source: any, format: string): string;
+    /**
      * Change locale
      * @param {string} locale
      */

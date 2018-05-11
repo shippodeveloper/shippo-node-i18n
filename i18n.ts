@@ -1,5 +1,6 @@
-let i18n = require("i18n");
+let i18n = require('i18n');
 let numeral = require('numeral');
+let moment = require('moment');
 
 export class I18n {
     public readonly version:string = '0.1.2';
@@ -8,6 +9,7 @@ export class I18n {
         '__nf' : '__nf',
         '__cf' : '__cf',
         '__cv' : '__cv',
+        '__dtf' : '__dtf',
         'switchLocale' : 'switchLocale'
     };
     private static _defaultLocale:string;
@@ -120,7 +122,7 @@ export class I18n {
 
         if (includeSymbol === true) {
             //@ts-ignore
-            return this.__nf(value, this.__('format.currency'));
+            return this.__nf(value, this.__('currency.default_format'));
         }
 
         return this.__nf(value);
@@ -138,11 +140,25 @@ export class I18n {
     }
 
     /**
+     *
+     * @param source Date|unix time formatted sting, exp: '2018-05-11'
+     * @param {string} format define in locate file
+     * @returns {string}
+     * @private
+     */
+    public static __dtf(source: any, format: string): string {
+        source = moment(source);
+        //@ts-ignore
+        return source.isValid()? source.format(this.__('datetime.' +format)): null;
+    }
+
+    /**
      * Change locale
      * @param {string} locale
      */
     public static switchLocale(locale:string) {
         i18n.setLocale(locale);
         numeral.locale(i18n.getLocale());
+        moment.locale(i18n.getLocale());
     }
 }
