@@ -1,6 +1,6 @@
 let i18n = require('i18n');
-let numeral = require('numeral');
 let moment = require('moment');
+let numeral = require('numeral');
 
 export class ShippoI18n {
     public readonly version:string = '0.1.2';
@@ -17,7 +17,6 @@ export class ShippoI18n {
     private static _registerObj:any;
 
     public static init(opt:any) {
-
         //setup i18n
         opt = (<any>Object).assign({}, opt);
 
@@ -33,7 +32,7 @@ export class ShippoI18n {
                 delete opt.numeral.defaultFormat;
             }
             for(let locale in opt.numeral) {
-                if(locale === 'en') { continue;}
+                if(numeral.hasOwnProperty('locales') && typeof numeral.locales[locale] !== 'undefined') { continue;}
                 numeral.register('locale', locale, opt.numeral[locale]);
             }
         }
@@ -46,16 +45,18 @@ export class ShippoI18n {
             if (Array.isArray(opt.register)) {
                 register = opt.register;
                 register.forEach(function(r:any) {
+                    r.numeral = numeral;
                     ShippoI18n._applyAPItoObject(r);
                 });
             } else {
+                opt.register.numeral = numeral;
                 ShippoI18n._applyAPItoObject(opt.register);
             }
         }
     }
 
     private static _applyAPItoObject(object:any) {
-        var alreadySetted = true;
+        let alreadySet = true;
 
         let api:any = ShippoI18n._api;
 
@@ -66,7 +67,7 @@ export class ShippoI18n {
 
                 // be kind rewind, or better not touch anything already existing
                 if (!object[alias]) {
-                    alreadySetted = false;
+                    alreadySet = false;
                     object[alias] = (<any>ShippoI18n)[method].bind(object);
                 }
             }
@@ -78,7 +79,7 @@ export class ShippoI18n {
         }
 
         // escape recursion
-        if (alreadySetted) {
+        if (alreadySet) {
             return;
         }
     }
@@ -90,6 +91,7 @@ export class ShippoI18n {
      * @public
      */
     public static __nv(input:string):number {
+        //@ts-ignore
         let output = numeral(input);
         return output.value();
     }
@@ -101,9 +103,11 @@ export class ShippoI18n {
      */
     public static __nf(value: number):string {
         if(typeof arguments[1] !== 'undefined') {
+            //@ts-ignore
             return numeral(value).format(arguments[1]);
         }
 
+        //@ts-ignore
         return numeral(value).format();
     }
 
@@ -157,8 +161,11 @@ export class ShippoI18n {
      * @param {string} locale
      */
     public static switchLocale(locale:string) {
-        i18n.setLocale(locale);
-        numeral.locale(i18n.getLocale());
-        moment.locale(i18n.getLocale());
+        //@ts-ignore
+        this.setLocale(locale);
+        //@ts-ignore
+        numeral.locale(this.getLocale());
+        //@ts-ignore
+        moment.locale(this.getLocale());
     }
 }

@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 let i18n = require('i18n');
-let numeral = require('numeral');
 let moment = require('moment');
+let numeral = require('numeral');
 class ShippoI18n {
     constructor() {
         this.version = '0.1.2';
@@ -20,7 +20,7 @@ class ShippoI18n {
                 delete opt.numeral.defaultFormat;
             }
             for (let locale in opt.numeral) {
-                if (locale === 'en') {
+                if (numeral.hasOwnProperty('locales') && typeof numeral.locales[locale] !== 'undefined') {
                     continue;
                 }
                 numeral.register('locale', locale, opt.numeral[locale]);
@@ -34,16 +34,18 @@ class ShippoI18n {
             if (Array.isArray(opt.register)) {
                 register = opt.register;
                 register.forEach(function (r) {
+                    r.numeral = numeral;
                     ShippoI18n._applyAPItoObject(r);
                 });
             }
             else {
+                opt.register.numeral = numeral;
                 ShippoI18n._applyAPItoObject(opt.register);
             }
         }
     }
     static _applyAPItoObject(object) {
-        var alreadySetted = true;
+        let alreadySet = true;
         let api = ShippoI18n._api;
         // attach to itself if not provided
         for (let method in api) {
@@ -51,7 +53,7 @@ class ShippoI18n {
                 let alias = api[method];
                 // be kind rewind, or better not touch anything already existing
                 if (!object[alias]) {
-                    alreadySetted = false;
+                    alreadySet = false;
                     object[alias] = ShippoI18n[method].bind(object);
                 }
             }
@@ -61,7 +63,7 @@ class ShippoI18n {
             object.locale = ShippoI18n._defaultLocale;
         }
         // escape recursion
-        if (alreadySetted) {
+        if (alreadySet) {
             return;
         }
     }
@@ -72,6 +74,7 @@ class ShippoI18n {
      * @public
      */
     static __nv(input) {
+        //@ts-ignore
         let output = numeral(input);
         return output.value();
     }
@@ -82,8 +85,10 @@ class ShippoI18n {
      */
     static __nf(value) {
         if (typeof arguments[1] !== 'undefined') {
+            //@ts-ignore
             return numeral(value).format(arguments[1]);
         }
+        //@ts-ignore
         return numeral(value).format();
     }
     /**
@@ -131,9 +136,12 @@ class ShippoI18n {
      * @param {string} locale
      */
     static switchLocale(locale) {
-        i18n.setLocale(locale);
-        numeral.locale(i18n.getLocale());
-        moment.locale(i18n.getLocale());
+        //@ts-ignore
+        this.setLocale(locale);
+        //@ts-ignore
+        numeral.locale(this.getLocale());
+        //@ts-ignore
+        moment.locale(this.getLocale());
     }
 }
 ShippoI18n._api = {

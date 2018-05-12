@@ -4,7 +4,7 @@ var I18n = require('../ShippoI18n').ShippoI18n,
 describe('i18n numeral', function () {
   var translator = {};
 
-  before(function() {
+  beforeEach(function() {
     I18n.init({
       locales: ['en', 'de', 'fr', 'ru'],
       directory: './locales',
@@ -137,5 +137,11 @@ describe('i18n numeral', function () {
       should.equal(translator.__nv('12,3B'), 12300000000, 'value in French');
       should.equal(translator.__nv('12,3T'), 12300000000000, 'value in French');
     });
-  })
+  });
+
+  describe('Init many i18n object', function () {
+    it('should not throw exception', function () {
+      //nothing
+    })
+  });
 });
