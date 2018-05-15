@@ -63,6 +63,7 @@ package-lock.json
 .idea
 *.sublime-workspace
 *.sublime-project
+*.code-workspace
 
 coverage/
 /coverage.html

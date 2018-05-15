@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/shippodeveloper/shippo-node-i18n#readme",
   "devDependencies": {
+    "@types/i18n": "^0.8.3",
     "@types/node": "^10.0.6",
     "coveralls": "^3.0.1",
     "istanbul": "^0.4.5",

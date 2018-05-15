@@ -1,10 +1,10 @@
-var I18n = require('../ShippoI18n').ShippoI18n;
-var should = require("should");
+var shippo_i18n = require('../shippo-i18n'),
+  should = require("should");
 
 describe('Object Notation', function() {
   let i18n = {};
   beforeEach(function() {
-    I18n.init({
+    shippo_i18n.init({
       locales: ['en', 'de'],
       directory: './locales',
       register: i18n,

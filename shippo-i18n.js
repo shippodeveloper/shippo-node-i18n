@@ -1,42 +1,31 @@
-let i18n = require('i18n');
-let moment = require('moment');
-let numeral = require('numeral');
-
-export class ShippoI18n {
-    public readonly version:string = '0.1.2';
-    private static _api = {
-        '__nv' : '__nv',
-        '__nf' : '__nf',
-        '__cf' : '__cf',
-        '__cv' : '__cv',
-        '__dtf' : '__dtf',
-        'switchLocale' : 'switchLocale'
+"use strict";
+module.exports = (function () {
+    let version = '2.0.0', i18n = require('i18n'), numeral = require('numeral'), moment = require('moment'), _api = {
+        '__nv': '__nv',
+        '__nf': '__nf',
+        '__cf': '__cf',
+        '__cv': '__cv',
+        '__dtf': '__dtf',
+        'switchLocale': 'switchLocale'
     };
-    private static _defaultLocale:string;
-
-    private static _registerObj:any;
-
-    public static init(opt:any) {
+    let shippo_i18n = {};
+    shippo_i18n.init = function (opt) {
         //setup i18n
-        opt = (<any>Object).assign({}, opt);
-
-        this._registerObj = opt.register;
-
+        opt = Object.assign({}, opt);
         i18n.configure(opt);
-        ShippoI18n._defaultLocale = i18n.getLocale();
-
         //setup numeral
-        if (typeof(opt.numeral) === 'object') {
+        if (typeof (opt.numeral) === 'object') {
             if (opt.numeral.hasOwnProperty('defaultFormat')) {
                 numeral.defaultFormat(opt.numeral.defaultFormat);
                 delete opt.numeral.defaultFormat;
             }
-            for(let locale in opt.numeral) {
-                if(numeral.hasOwnProperty('locales') && typeof numeral.locales[locale] !== 'undefined') { continue;}
+            for (let locale in opt.numeral) {
+                if (numeral.hasOwnProperty('locales') && typeof numeral.locales[locale] !== 'undefined') {
+                    continue;
+                }
                 numeral.register('locale', locale, opt.numeral[locale]);
             }
         }
-
         // you may register i18n in global scope, up to you
         let register;
         if (typeof opt.register === 'object') {
@@ -44,73 +33,66 @@ export class ShippoI18n {
             // or give an array objects to register to
             if (Array.isArray(opt.register)) {
                 register = opt.register;
-                register.forEach(function(r:any) {
+                register.forEach(function (r) {
                     r.numeral = numeral;
-                    ShippoI18n._applyAPItoObject(r);
+                    r.moment = moment;
+                    _applyAPItoObject(r);
                 });
-            } else {
+            }
+            else {
                 opt.register.numeral = numeral;
-                ShippoI18n._applyAPItoObject(opt.register);
+                opt.register.moment = moment;
+                _applyAPItoObject(opt.register);
             }
         }
-    }
-
-    private static _applyAPItoObject(object:any) {
+    };
+    function _applyAPItoObject(object) {
         let alreadySet = true;
-
-        let api:any = ShippoI18n._api;
-
         // attach to itself if not provided
-        for (let method in api) {
-            if (api.hasOwnProperty(method)) {
-                let alias:string = api[method];
-
+        for (let method in _api) {
+            if (_api.hasOwnProperty(method)) {
+                let alias = _api[method];
                 // be kind rewind, or better not touch anything already existing
                 if (!object[alias]) {
                     alreadySet = false;
-                    object[alias] = (<any>ShippoI18n)[method].bind(object);
+                    //@ts-ignore
+                    object[alias] = shippo_i18n[method].bind(object);
                 }
             }
         }
-
         // set initial locale if not set
         if (!object.locale) {
-            object.locale = ShippoI18n._defaultLocale;
+            object.locale = i18n.getLocale();
         }
-
         // escape recursion
         if (alreadySet) {
             return;
         }
     }
-
     /**
      * Get number value from formatted text
      * @param {string} input
      * @returns {number}
      * @public
      */
-    public static __nv(input:string):number {
+    shippo_i18n.__nv = function (input) {
         //@ts-ignore
-        let output = numeral(input);
+        let output = this.numeral(input);
         return output.value();
-    }
-
+    };
     /**
      * Format display number
      * @param {number} value
      * @private
      */
-    public static __nf(value: number):string {
-        if(typeof arguments[1] !== 'undefined') {
+    shippo_i18n.__nf = function (value) {
+        if (typeof arguments[1] !== 'undefined') {
             //@ts-ignore
-            return numeral(value).format(arguments[1]);
+            return this.numeral(value).format(arguments[1]);
         }
-
         //@ts-ignore
-        return numeral(value).format();
-    }
-
+        return this.numeral(value).format();
+    };
     /**
      * Format currency text from value
      *
@@ -119,19 +101,17 @@ export class ShippoI18n {
      * @returns {string}
      * @private
      */
-    public static __cf(value:number, includeSymbol:any):string {
-        if(typeof includeSymbol === 'undefined') {
+    shippo_i18n.__cf = function (value, includeSymbol) {
+        if (typeof includeSymbol === 'undefined') {
             includeSymbol = true;
         }
-
         if (includeSymbol === true) {
             //@ts-ignore
             return this.__nf(value, this.__('currency.default_format'));
         }
-
+        //@ts-ignore
         return this.__nf(value);
-    }
-
+    };
     /**
      * Get value from currency formatted text
      *
@@ -139,10 +119,10 @@ export class ShippoI18n {
      * @returns {number}
      * @private
      */
-    public static __cv(input:string): number {
+    shippo_i18n.__cv = function (input) {
+        //@ts-ignore
         return this.__nv(input);
-    }
-
+    };
     /**
      *
      * @param source Date|unix time formatted sting, exp: '2018-05-11'
@@ -150,22 +130,23 @@ export class ShippoI18n {
      * @returns {string}
      * @private
      */
-    public static __dtf(source: any, format: string): string {
-        source = moment(source);
+    shippo_i18n.__dtf = function (source, format) {
         //@ts-ignore
-        return source.isValid()? source.format(this.__('datetime.' +format)): null;
-    }
-
+        source = this.moment(source);
+        //@ts-ignore
+        return source.isValid() ? source.format(this.__('datetime.' + format)) : null;
+    };
     /**
      * Change locale
      * @param {string} locale
      */
-    public static switchLocale(locale:string) {
+    shippo_i18n.switchLocale = function (locale) {
         //@ts-ignore
         this.setLocale(locale);
         //@ts-ignore
-        numeral.locale(this.getLocale());
+        this.numeral.locale(this.getLocale());
         //@ts-ignore
-        moment.locale(this.getLocale());
-    }
-}
+        this.moment.locale(this.getLocale());
+    };
+    return shippo_i18n;
+}());
